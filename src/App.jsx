@@ -58,7 +58,7 @@ export default function App() {
     localStorage.setItem("dogs", JSON.stringify(newFavorites));
   };
 
-  const removeDogToFavorite = (url) => {
+  const removeDogFromFavorite = (url) => {
     const newFavorites = [...preferredDogs].filter((e) => e.url !== url);
     setPreferredDogs(newFavorites);
     localStorage.setItem("dogs", JSON.stringify(newFavorites));
@@ -96,14 +96,14 @@ export default function App() {
             text={selectedBreed}
           />
         </div>
-        {dogList.length > 0 && <h3>Cliquer pour ajouter aux favoris</h3>}
+        {dogList.length > 0 && <h3>Cliquez pour ajouter aux favoris</h3>}
         <DogList
           itemData={dogList}
           cols={selectedColumnChoice}
           breed={selectedBreed}
           preferredDogs={preferredDogs}
           addDogToFavorite={addDogToFavorite}
-          removeDogToFavorite={removeDogToFavorite}
+          removeDogFromFavorite={removeDogFromFavorite}
         />
       </Container>
     </main>

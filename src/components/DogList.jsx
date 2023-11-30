@@ -6,7 +6,7 @@ export default function DogList({
   cols = 2,
   preferredDogs,
   addDogToFavorite,
-  removeDogToFavorite,
+  removeDogFromFavorite,
 }) {
   return (
     <ImageList sx={{ width: "100%" }} cols={cols} rowHeigdht={164}>
@@ -20,7 +20,9 @@ export default function DogList({
               alt={item}
               loading="lazy"
               onClick={() =>
-                isPreferred ? removeDogToFavorite(item) : addDogToFavorite(item)
+                isPreferred
+                  ? removeDogFromFavorite(item)
+                  : addDogToFavorite(item)
               }
             />
             {isPreferred && <div>Saved</div>}
