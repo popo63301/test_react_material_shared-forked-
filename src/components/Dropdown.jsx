@@ -8,7 +8,7 @@ export default function Dropdown({
   onChange,
   label,
   currentValue,
-  values = []
+  values = [],
 }) {
   const handleChange = (event) => {
     onChange(event.target.value);
@@ -18,7 +18,16 @@ export default function Dropdown({
     <Box sx={{ paddingBlockEnd: 2 }}>
       <FormControl fullWidth>
         <InputLabel>{label}</InputLabel>
-        <Select value={currentValue} label={label} onChange={handleChange}>
+        <Select
+          value={currentValue}
+          label={label}
+          onChange={handleChange}
+          MenuProps={{
+            style: {
+              maxHeight: 400,
+            },
+          }}
+        >
           {values.map((value) => (
             <MenuItem key={value} value={value}>
               {value}
