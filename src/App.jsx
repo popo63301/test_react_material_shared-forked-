@@ -74,7 +74,7 @@ export default function App() {
               onChange={(breed) => setSelectedBreed(breed)}
               label="Choose a dog"
               values={breedList}
-              currentValue={selectedBreed}
+              currentValue={selectedBreed === defaultText ? "" : selectedBreed}
             />
             <Dropdown
               onChange={(count) => setSelectedDogCountChoices(count)}

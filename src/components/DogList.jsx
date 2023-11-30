@@ -9,7 +9,7 @@ export default function DogList({
   removeDogFromFavorite,
 }) {
   return (
-    <ImageList sx={{ width: "100%" }} cols={cols} rowHeigdht={164}>
+    <ImageList sx={{ width: "100%" }} cols={cols}>
       {itemData.map((item) => {
         const isPreferred = preferredDogs.some((e) => e.url === item);
         return (
