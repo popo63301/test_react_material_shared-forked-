@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import DogCard from "./components/DogCard";
 import DogList from "./components/DogList";
@@ -22,7 +23,7 @@ export default function App() {
     "https://dnatestingchoice.com/perch/resources/main-picture-dog-1.jpg"
   );
   const [selectedDogCountChoices, setSelectedDogCountChoices] = useState(5);
-  const [selectedColumnChoice, setSelectedColumnChoice] = useState(2);
+  const [selectedColumnChoice, setSelectedColumnChoice] = useState(3);
   const [dogList, setDogList] = useState([]);
 
   useEffect(() => {
@@ -68,6 +69,7 @@ export default function App() {
               values={columnChoices}
               currentValue={selectedColumnChoice}
             />
+            <Link to="/favorites">Prefered breeds</Link>
           </div>
           <DogCard
             url={selectedImage}
