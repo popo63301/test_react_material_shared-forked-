@@ -6,6 +6,7 @@ import DogList from "./components/DogList";
 import Dropdown from "./components/Dropdown";
 
 import { prepareBreeds } from "./utils";
+import { fetchImages } from "./utils/api";
 
 import "./styles.css";
 
@@ -15,23 +16,14 @@ const dogCountChoices = Array.from(Array(50).keys(), (item) => item + 1);
 
 const columnChoices = [1];
 
-const dogImageUrl =
-  "https://dnatestingchoice.com/perch/resources/main-picture-dog-1.jpg";
-
-const dogList = [
-  dogImageUrl,
-  dogImageUrl,
-  dogImageUrl,
-  dogImageUrl,
-  dogImageUrl,
-];
-
 export default function App() {
   const [breedList, setBreedList] = useState([]);
-  const [selectedBreed, setSelectedBreed] = useState(null);
+  const [selectedBreed, setSelectedBreed] = useState("Select a breed");
   const [selectedImage, setSelectedImage] = useState(
     "https://dnatestingchoice.com/perch/resources/main-picture-dog-1.jpg"
   );
+  const [selectedDogCountChoices, setSelectedDogCountChoices] = useState(5);
+  const [dogList, setDogList] = useState([]);
 
   useEffect(() => {
     async function initialCall() {
@@ -42,6 +34,12 @@ export default function App() {
     initialCall();
   }, []);
 
+  const selectBreed = async (breed) => {
+    const res = await fetchImages(breed, selectedDogCountChoices);
+    setSelectedBreed(breed);
+    setDogList(res);
+  };
+
   return (
     <main className="App">
       <Container>
@@ -49,16 +47,16 @@ export default function App() {
         <div className="App_head">
           <div className="App_head_dropdowns">
             <Dropdown
-              onChange={(breed) => setSelectedBreed(breed)}
+              onChange={(breed) => selectBreed(breed)}
               label="Choose a dog"
               values={breedList}
               currentValue={selectedBreed}
             />
             <Dropdown
-              onChange={(event) => event}
+              onChange={(count) => setSelectedDogCountChoices(count)}
               label="How many dogs"
               values={dogCountChoices}
-              currentValue=""
+              currentValue={selectedDogCountChoices}
             />
             <Dropdown
               onChange={(event) => event}
@@ -70,7 +68,7 @@ export default function App() {
           <DogCard
             url={selectedImage}
             alt={selectedBreed}
-            text={"Select a breed"}
+            text={selectedBreed}
           />
         </div>
         <DogList itemData={dogList} cols={2} />
