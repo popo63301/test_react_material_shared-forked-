@@ -14,6 +14,7 @@ const dogCountChoices = Array.from(Array(50).keys(), (item) => item + 1);
 const columnChoices = Array.from(Array(4).keys(), (item) => item + 1);
 
 const defaultText = "Select a breed";
+
 export default function App() {
   const [breedList, setBreedList] = useState([]);
   const [selectedBreed, setSelectedBreed] = useState(defaultText);
@@ -21,6 +22,7 @@ export default function App() {
     "https://dnatestingchoice.com/perch/resources/main-picture-dog-1.jpg"
   );
   const [selectedDogCountChoices, setSelectedDogCountChoices] = useState(5);
+  const [selectedColumnChoice, setSelectedColumnChoice] = useState(2);
   const [dogList, setDogList] = useState([]);
 
   useEffect(() => {
@@ -40,7 +42,7 @@ export default function App() {
 
   useEffect(() => {
     selectedBreed != defaultText && selectBreed();
-  }, [selectedBreed, selectedDogCountChoices]);
+  }, [selectedBreed, selectedDogCountChoices, selectedColumnChoice]);
 
   return (
     <main className="App">
@@ -61,10 +63,10 @@ export default function App() {
               currentValue={selectedDogCountChoices}
             />
             <Dropdown
-              onChange={(event) => event}
+              onChange={(columnChoice) => setSelectedColumnChoice(columnChoice)}
               label="How many columns"
               values={columnChoices}
-              currentValue=""
+              currentValue={selectedColumnChoice}
             />
           </div>
           <DogCard
@@ -73,7 +75,7 @@ export default function App() {
             text={selectedBreed}
           />
         </div>
-        <DogList itemData={dogList} cols={2} />
+        <DogList itemData={dogList} cols={selectedColumnChoice} />
       </Container>
     </main>
   );
