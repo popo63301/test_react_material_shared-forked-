@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import App from "./App";
-import PreferredBreeds from "./pages/PreferredBreeds";
+import PreferredDogs from "./pages/PreferredDogs";
 
 const rootElement = document.getElementById("root") as Element;
 const root = createRoot(rootElement);
@@ -13,7 +13,7 @@ root.render(
     <Router>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/favorites" element={<PreferredBreeds />} />
+        <Route path="/favorites" element={<PreferredDogs />} />
       </Routes>
     </Router>
   </StrictMode>

@@ -16,8 +16,13 @@ const columnChoices = Array.from(Array(4).keys(), (item) => item + 1);
 
 const defaultText = "Select a breed";
 
+type Dog = {
+  breed: string;
+  url: string;
+};
+
 export default function App() {
-  const [breedList, setBreedList] = useState([]);
+  const [breedList, setBreedList] = useState<string[]>([]);
   const [selectedBreed, setSelectedBreed] = useState(defaultText);
   const [selectedImage, setSelectedImage] = useState(
     "https://dnatestingchoice.com/perch/resources/main-picture-dog-1.jpg"
@@ -25,7 +30,7 @@ export default function App() {
   const [selectedDogCountChoices, setSelectedDogCountChoices] = useState(5);
   const [selectedColumnChoice, setSelectedColumnChoice] = useState(3);
   const [dogList, setDogList] = useState([]);
-  const [preferredDogs, setPreferredDogs] = useState([]);
+  const [preferredDogs, setPreferredDogs] = useState<Dog[]>([]);
 
   useEffect(() => {
     async function initialCall() {
@@ -52,14 +57,14 @@ export default function App() {
     setSelectedImage(res[0]);
   };
 
-  const addDogToFavorite = (url) => {
+  const addDogToFavorite = (url: string) => {
     const newFavorites = [...preferredDogs, { url, breed: selectedBreed }];
     setPreferredDogs(newFavorites);
     localStorage.setItem("dogs", JSON.stringify(newFavorites));
   };
 
-  const removeDogFromFavorite = (url) => {
-    const newFavorites = [...preferredDogs].filter((e) => e.url !== url);
+  const removeDogFromFavorite = (url: string) => {
+    const newFavorites = [...preferredDogs].filter((e: Dog) => e.url !== url);
     setPreferredDogs(newFavorites);
     localStorage.setItem("dogs", JSON.stringify(newFavorites));
   };
@@ -88,7 +93,7 @@ export default function App() {
               values={columnChoices}
               currentValue={selectedColumnChoice}
             />
-            <Link to="/favorites">Prefered breeds</Link>
+            <Link to="/favorites">Prefered dogs</Link>
           </div>
           <DogCard
             url={selectedImage}
@@ -100,7 +105,6 @@ export default function App() {
         <DogList
           itemData={dogList}
           cols={selectedColumnChoice}
-          breed={selectedBreed}
           preferredDogs={preferredDogs}
           addDogToFavorite={addDogToFavorite}
           removeDogFromFavorite={removeDogFromFavorite}

@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import { Container } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const PreferredBreeds = () => {
+type Dog = {
+  breed: string;
+  url: string;
+};
+
+const PreferredDogs = () => {
   const [preferredDogs, setPreferredDogs] = useState([]);
 
   useEffect(() => {
@@ -12,8 +17,8 @@ const PreferredBreeds = () => {
     }
   }, []);
 
-  const removeDogFromFavorite = (url) => {
-    const newFavorites = [...preferredDogs].filter((e) => e.url !== url);
+  const removeDogFromFavorite = (url: string) => {
+    const newFavorites = [...preferredDogs].filter((e: Dog) => e.url !== url);
     setPreferredDogs(newFavorites);
     localStorage.setItem("dogs", JSON.stringify(newFavorites));
   };
@@ -35,7 +40,7 @@ const PreferredBreeds = () => {
               margin: "0 auto",
             }}
           >
-            {preferredDogs.map((e, index) => (
+            {preferredDogs.map((e: Dog, index) => (
               <div
                 key={index}
                 style={{ display: "flex", flexDirection: "column" }}
@@ -58,4 +63,4 @@ const PreferredBreeds = () => {
   );
 };
 
-export default PreferredBreeds;
+export default PreferredDogs;

@@ -7,8 +7,8 @@ import Select from "@mui/material/Select";
 type DropdownProps = {
   onChange: (item: any) => void;
   label: string;
-  currentValue: string;
-  values: string[];
+  currentValue: any;
+  values: any;
 };
 
 export default function Dropdown({
@@ -35,7 +35,7 @@ export default function Dropdown({
             },
           }}
         >
-          {values.map((value) => (
+          {values.map((value: any) => (
             <MenuItem key={value} value={value}>
               {value}
             </MenuItem>
