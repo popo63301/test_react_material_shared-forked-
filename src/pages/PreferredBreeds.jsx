@@ -35,8 +35,11 @@ const PreferredBreeds = () => {
               margin: "0 auto",
             }}
           >
-            {preferredDogs.map((e) => (
-              <div style={{ display: "flex", flexDirection: "column" }}>
+            {preferredDogs.map((e, index) => (
+              <div
+                key={index}
+                style={{ display: "flex", flexDirection: "column" }}
+              >
                 <img
                   src={`${e.url}?w=164&h=164&fit=cover&auto=format`}
                   srcSet={`${e.url}?w=164&h=164&fit=cover&auto=format&dpr=2 2x`}

@@ -1,6 +1,6 @@
 import { checkSubbreed } from "./index";
 
-export const fetchImages = async (breed, count) => {
+export const fetchImages = async (breed: string, count: number) => {
   let response;
 
   if (checkSubbreed(breed)) {

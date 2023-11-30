@@ -4,13 +4,20 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
+type DropdownProps = {
+  onChange: (item: any) => void;
+  label: string;
+  currentValue: string;
+  values: string[];
+};
+
 export default function Dropdown({
   onChange,
   label,
   currentValue,
   values = [],
-}) {
-  const handleChange = (event) => {
+}: DropdownProps) {
+  const handleChange = (event: any) => {
     onChange(event.target.value);
   };
 

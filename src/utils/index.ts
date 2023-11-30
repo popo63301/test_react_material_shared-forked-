@@ -1,4 +1,4 @@
-export const prepareBreeds = (breeds) =>
+export const prepareBreeds = (breeds: any): string[] =>
   Object.keys(breeds)
     .map((e) => {
       if (breeds[e].length > 0) {
@@ -10,4 +10,4 @@ export const prepareBreeds = (breeds) =>
     })
     .flat();
 
-export const checkSubbreed = (breed) => breed.includes(" ");
+export const checkSubbreed = (breed: string): boolean => breed.includes(" ");
