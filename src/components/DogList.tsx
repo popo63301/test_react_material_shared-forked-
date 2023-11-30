@@ -1,17 +1,25 @@
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 
+type DogListProps = {
+  itemData: string[];
+  cols: number;
+  preferredDogs: any;
+  addDogToFavorite: (item: string) => void;
+  removeDogFromFavorite: (item: string) => void;
+};
+
 export default function DogList({
   itemData,
   cols = 2,
   preferredDogs,
   addDogToFavorite,
   removeDogFromFavorite,
-}) {
+}: DogListProps) {
   return (
     <ImageList sx={{ width: "100%" }} cols={cols}>
-      {itemData.map((item) => {
-        const isPreferred = preferredDogs.some((e) => e.url === item);
+      {itemData.map((item: string) => {
+        const isPreferred = preferredDogs.some((e: any) => e.url === item);
         return (
           <ImageListItem key={item}>
             <img
