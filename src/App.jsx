@@ -25,6 +25,7 @@ export default function App() {
   const [selectedDogCountChoices, setSelectedDogCountChoices] = useState(5);
   const [selectedColumnChoice, setSelectedColumnChoice] = useState(3);
   const [dogList, setDogList] = useState([]);
+  const [preferredDogs, setPreferredDogs] = useState([]);
 
   useEffect(() => {
     async function initialCall() {
@@ -32,8 +33,18 @@ export default function App() {
       const breeds = await response.json();
       setBreedList(prepareBreeds(breeds.message));
     }
+
+    const dogs = localStorage.getItem("dogs");
+    if (dogs) {
+      setPreferredDogs(JSON.parse(dogs));
+    }
+
     initialCall();
   }, []);
+
+  useEffect(() => {
+    selectedBreed != defaultText && selectBreed();
+  }, [selectedBreed, selectedDogCountChoices, selectedColumnChoice]);
 
   const selectBreed = async () => {
     const res = await fetchImages(selectedBreed, selectedDogCountChoices);
@@ -41,9 +52,17 @@ export default function App() {
     setSelectedImage(res[0]);
   };
 
-  useEffect(() => {
-    selectedBreed != defaultText && selectBreed();
-  }, [selectedBreed, selectedDogCountChoices, selectedColumnChoice]);
+  const addDogToFavorite = (url) => {
+    const newFavorites = [...preferredDogs, { url, breed: selectedBreed }];
+    setPreferredDogs(newFavorites);
+    localStorage.setItem("dogs", JSON.stringify(newFavorites));
+  };
+
+  const removeDogToFavorite = (url) => {
+    const newFavorites = [...preferredDogs].filter((e) => e.url !== url);
+    setPreferredDogs(newFavorites);
+    localStorage.setItem("dogs", JSON.stringify(newFavorites));
+  };
 
   return (
     <main className="App">
@@ -77,7 +96,15 @@ export default function App() {
             text={selectedBreed}
           />
         </div>
-        <DogList itemData={dogList} cols={selectedColumnChoice} />
+        {dogList.length > 0 && <h3>Cliquer pour ajouter aux favoris</h3>}
+        <DogList
+          itemData={dogList}
+          cols={selectedColumnChoice}
+          breed={selectedBreed}
+          preferredDogs={preferredDogs}
+          addDogToFavorite={addDogToFavorite}
+          removeDogToFavorite={removeDogToFavorite}
+        />
       </Container>
     </main>
   );
