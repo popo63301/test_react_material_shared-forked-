@@ -13,9 +13,10 @@ import "./styles.css";
 const dogCountChoices = Array.from(Array(50).keys(), (item) => item + 1);
 const columnChoices = Array.from(Array(4).keys(), (item) => item + 1);
 
+const defaultText = "Select a breed";
 export default function App() {
   const [breedList, setBreedList] = useState([]);
-  const [selectedBreed, setSelectedBreed] = useState("Select a breed");
+  const [selectedBreed, setSelectedBreed] = useState(defaultText);
   const [selectedImage, setSelectedImage] = useState(
     "https://dnatestingchoice.com/perch/resources/main-picture-dog-1.jpg"
   );
@@ -31,12 +32,15 @@ export default function App() {
     initialCall();
   }, []);
 
-  const selectBreed = async (breed) => {
-    const res = await fetchImages(breed, selectedDogCountChoices);
-    setSelectedBreed(breed);
+  const selectBreed = async () => {
+    const res = await fetchImages(selectedBreed, selectedDogCountChoices);
     setDogList(res);
     setSelectedImage(res[0]);
   };
+
+  useEffect(() => {
+    selectedBreed != defaultText && selectBreed();
+  }, [selectedBreed, selectedDogCountChoices]);
 
   return (
     <main className="App">
@@ -45,7 +49,7 @@ export default function App() {
         <div className="App_head">
           <div className="App_head_dropdowns">
             <Dropdown
-              onChange={(breed) => selectBreed(breed)}
+              onChange={(breed) => setSelectedBreed(breed)}
               label="Choose a dog"
               values={breedList}
               currentValue={selectedBreed}
