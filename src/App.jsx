@@ -10,11 +10,8 @@ import { fetchImages } from "./utils/api";
 
 import "./styles.css";
 
-const dogBreedlist = ["labrador"];
-
 const dogCountChoices = Array.from(Array(50).keys(), (item) => item + 1);
-
-const columnChoices = [1];
+const columnChoices = Array.from(Array(4).keys(), (item) => item + 1);
 
 export default function App() {
   const [breedList, setBreedList] = useState([]);
@@ -38,6 +35,7 @@ export default function App() {
     const res = await fetchImages(breed, selectedDogCountChoices);
     setSelectedBreed(breed);
     setDogList(res);
+    setSelectedImage(res[0]);
   };
 
   return (
