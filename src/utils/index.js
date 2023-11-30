@@ -9,3 +9,5 @@ export const prepareBreeds = (breeds) =>
       return e;
     })
     .flat();
+
+export const checkSubbreed = (breed) => breed.includes(" ");

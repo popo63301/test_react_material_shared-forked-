@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Container } from "@mui/material";
 
 import DogCard from "./components/DogCard";
@@ -16,7 +16,7 @@ const dogCountChoices = Array.from(Array(50).keys(), (item) => item + 1);
 const columnChoices = [1];
 
 const dogImageUrl =
-  "https://images.dog.ceo/breeds/bullterrier-staffordshire/n02093256_4972.jpg";
+  "https://dnatestingchoice.com/perch/resources/main-picture-dog-1.jpg";
 
 const dogList = [
   dogImageUrl,
@@ -27,14 +27,17 @@ const dogList = [
 ];
 
 export default function App() {
-  const defaultDogBreed = "australianshepard";
+  const [breedList, setBreedList] = useState([]);
+  const [selectedBreed, setSelectedBreed] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(
+    "https://dnatestingchoice.com/perch/resources/main-picture-dog-1.jpg"
+  );
 
   useEffect(() => {
     async function initialCall() {
       const response = await fetch("https://dog.ceo/api/breeds/list/all");
       const breeds = await response.json();
-      console.log(prepareBreeds(breeds.message));
-      console.log(breeds.message);
+      setBreedList(prepareBreeds(breeds.message));
     }
     initialCall();
   }, []);
@@ -46,10 +49,10 @@ export default function App() {
         <div className="App_head">
           <div className="App_head_dropdowns">
             <Dropdown
-              onChange={(event) => event}
+              onChange={(breed) => setSelectedBreed(breed)}
               label="Choose a dog"
-              values={dogBreedlist}
-              currentValue=""
+              values={breedList}
+              currentValue={selectedBreed}
             />
             <Dropdown
               onChange={(event) => event}
@@ -65,9 +68,9 @@ export default function App() {
             />
           </div>
           <DogCard
-            url={dogImageUrl}
-            alt={defaultDogBreed}
-            text={defaultDogBreed}
+            url={selectedImage}
+            alt={selectedBreed}
+            text={"Select a breed"}
           />
         </div>
         <DogList itemData={dogList} cols={2} />
